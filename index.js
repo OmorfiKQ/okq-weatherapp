@@ -1,9 +1,15 @@
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#current-temperature");
   let temperature = Math.round(response.data.temperature.current);
+  let weatherIcon = response.condition.icon;
+  
   let cityElement = document.querySelector("#current-city");
   cityElement.innerHTML = response.data.city;
+  
   temperatureElement.innerHTML = temperature;
+
+  let weatherIconElement = document.querySelector("#current-temperature-icon");
+  weatherIconElement.innerHTML = weatherIcon.value;
 }
 
 function search(event) {
@@ -11,8 +17,9 @@ function search(event) {
   let searchInputElement = document.querySelector("#search-input");
   let city = searchInputElement.value;
 
-  let apiKey = "b2a5adcct04b33178913oc335f405433";
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+  let apiKey = "o43fad540acb9b0t06a993fb7c4f5697";
+  let apiUrl =
+    "https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=imperial";
 
   axios.get(apiUrl).then(displayTemperature);
 }
@@ -22,11 +29,11 @@ function formatDate(date) {
   let hours = date.getHours();
   let day = date.getDay();
 
-  if (minutes < 10) {
+  if (minutes < 30) {
     minutes = `0${minutes}`;
   }
 
-  if (hours < 10) {
+  if (hours < 12) {
     hours = `0${hours}`;
   }
 
